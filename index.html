@@ -4,66 +4,126 @@
 <meta charset="utf-8">
 <title>DFTALK three.js サンプル</title>
 </head>
- 
+
 <body>
- 
-    <!-- three.jsを読み込む -->
-    <script type="text/javascript" src="three.min.js"></script>
- 
-    <script>
-        // ここにコードを書いていきます。
-        // シーンの作成 ------------------------------------------
-        var scene = new THREE.Scene();
- 
-        // カメラの作成 ------------------------------------------
-        // fov: 画角(視野角)
-        var fov = 75;
- 
-        var height = 600; // 縦幅
-        var width = 400; // 横幅
-        // aspect: アスペクト比、カメラで撮影したものの縦横比
-        var aspect = height/width;
- 
-        // near： ニアークリップ、 カメラからの撮影開始位置、これより近いものは撮影しない
-        var near = 1;
-        // far: ファークリップ カメラからの撮影終了位置、これより遠いものは撮影しない
-        var far = 1000;
- 
-        // カメラ作成
-        var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        // カメラ配置
-        camera.position.set(0, 0, 70); // (x, y, z)
- 
-        // レンダラーの追加 ----------------------------------------
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(height, width); // Canvasのサイズ設定
-        document.body.appendChild(renderer.domElement);
- 
-        // ライティングを設定する ------------------------------------
-        var color = 'white'; // 光の色
-        // ライトオブジェクトの作成
-        var directionalLight = new THREE.DirectionalLight(color);
-        directionalLight.position.set(0, 7, 10); // 光源の角度を設定
-        scene.add(directionalLight); // シーンに追加
- 
-        // 物体を追加する ----------------------------------------
-        // ジオメトリーの作成
-        var geometry = new THREE.CubeGeometry(20, 20, 20); // x, y, z
-        // マテリアルの作成
-        var material = new THREE.MeshPhongMaterial({color: 'orange'});
-        // メッシュの作成
-        cube = new THREE.Mesh(geometry, material);
-        cube.position.set(0, 0, 0); // 位置を設定(x, y, z)
-        scene.add(cube); // シーンに追加
- 
-        // レンダリング ----------------------------------------
-        function render() {
-          // シーンとカメラを渡してレンダリング
-          renderer.render(scene, camera);
-        }
-        render();
- 
-    </script>
- 
+
+<!-- three.jsを読み込む -->
+<script type="text/javascript" src="three.min.js"></script>
+<!-- カメラ操作用ライブラリを読み込む -->
+<script src="https://rawgithub.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+// ここにコードを書いていきます。
+// シーンの作成 ------------------------------------------
+var scene = new THREE.Scene();
+
+// カメラの作成 ------------------------------------------
+// fov: 画角(視野角)
+var fov = 75;
+
+var height = 600; // 縦幅
+var width = 400; // 横幅
+// aspect: アスペクト比、カメラで撮影したものの縦横比
+var aspect = height/width;
+
+// near： ニアークリップ、 カメラからの撮影開始位置、これより近いものは撮影しない
+var near = 1;
+// far: ファークリップ カメラからの撮影終了位置、これより遠いものは撮影しない
+var far = 1000;
+
+// カメラ作成
+var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+// カメラ配置
+camera.position.set(-10, 40, 60); // (x, y, z)
+
+// レンダラーの追加 ----------------------------------------
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(height, width); // Canvasのサイズ設定
+document.body.appendChild(renderer.domElement);
+
+var color = 'white';
+var light = new THREE.AmbientLight(color);
+scene.add( light );
+
+//plane
+var geometry = new THREE.CubeGeometry(100, 1, 100); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'orange'});
+plane = new THREE.Mesh(geometry, material);
+plane.position.set(0, 0, 0);  // 位置を設定(x, y, z)
+scene.add(plane); // シーンに追加
+
+//wall_1
+var geometry = new THREE.CubeGeometry(0, 100, 100); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'blue'});
+wall_1 = new THREE.Mesh(geometry, material);
+wall_1.position.set(-50, 50, 0);  // 位置を設定(x, y, z)
+scene.add(wall_1); // シーンに追加
+
+//wall_2
+var geometry = new THREE.CubeGeometry(100, 100, 0); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'red'});
+wall_2 = new THREE.Mesh(geometry, material);
+wall_2.position.set(0, 50, -50);  // 位置を設定(x, y, z)
+scene.add(wall_2); // シーンに追加
+
+//wall_3
+var geometry = new THREE.CubeGeometry(0, 100, 100); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'purple'});
+wall_3 = new THREE.Mesh(geometry, material);
+wall_3.position.set(50, 50, 0);  // 位置を設定(x, y, z)
+scene.add(wall_3); // シーンに追加
+
+//bed
+// 物体を追加する ----------------------------------------
+// ジオメトリーの作成
+var geometry = new THREE.CubeGeometry(30, 6, 30); // サイズ設定（x, y, z）
+// マテリアルの作成
+var material = new THREE.MeshPhongMaterial({color: 'green'});
+// メッシュの作成
+bed = new THREE.Mesh(geometry, material);
+bed.position.set(0, 0, 0);  // 位置を設定(x, y, z)
+
+//bed_parts
+var geometry = new THREE.CubeGeometry(1, 15, 30); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'black'});
+bed_p = new THREE.Mesh(geometry, material);
+bed_p.position.set(15, 0, 0);  // 位置を設定(x, y, z)
+bed.add(bed_p);
+scene.add(bed); // シーンに追加
+
+//pillow
+var geometry = new THREE.CubeGeometry(3, 2, 5); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'orange'});
+pillow = new THREE.Mesh(geometry, material);
+pillow.position.set(10, 4, 0);  // 位置を設定(x, y, z)
+bed.add(pillow);
+scene.add(bed); // シーンに追加
+
+//mat
+var geometry = new THREE.CubeGeometry(15, 1, 30); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'pink'});
+mat = new THREE.Mesh(geometry, material);
+mat.position.set(-25, -2, 0);  // 位置を設定(x, y, z)
+bed.add(mat);
+scene.add(bed); // シーンに追加
+
+bed.position.set(34, 3, 3);  // 位置を設定(x, y, z)
+
+// レンダリング ----------------------------------------
+function render() {
+
+
+  // 回転アニメーションを追加
+  requestAnimationFrame(render);
+  // シーンとカメラを渡してレンダリング
+    renderer.render(scene, camera);
+    }
+    render();
+
+// カメラコントロール ----------------------------------------
+var controls = new THREE.OrbitControls(camera);
+
+</script>
+
 </body>
 </html>
