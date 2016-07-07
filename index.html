@@ -107,7 +107,42 @@ mat.position.set(-25, -2, 0);  // 位置を設定(x, y, z)
 bed.add(mat);
 scene.add(bed); // シーンに追加
 
-bed.position.set(34, 3, 3);  // 位置を設定(x, y, z)
+//deskside cavin
+var geometry = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'red'});
+b_cavin = new THREE.Mesh(geometry, material);
+b_cavin.position.set(-42, 8, 39);  // 位置を設定(x, y, z)
+scene.add(b_cavin); // シーンに追加
+
+//bedside cavin
+var geometry = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'black'});
+b_cavin = new THREE.Mesh(geometry, material);
+b_cavin.position.set(42, 7, -36);  // 位置を設定(x, y, z)
+scene.add(b_cavin); // シーンに追加
+
+//desk
+var geometry = new THREE.CubeGeometry(25, 10, 10); // サイズ設定（x, y, z）
+var material = new THREE.MeshPhongMaterial({color: 'yellow'});
+cavin = new THREE.Mesh(geometry, material);
+cavin.position.set(0, 5, 44);  // 位置を設定(x, y, z)
+scene.add(cavin); // シーンに追加
+
+//bedside cylinder
+var geometry = new THREE.CylinderGeometry(3,3,6,50);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+b_cylinder = new THREE.Mesh(geometry, material);
+b_cylinder.position.set(45, 3, 20);  // 位置を設定(x, y, z)
+scene.add(b_cylinder); // シーンに追加
+
+//trash can
+var geometry = new THREE.CylinderGeometry(3,3,6,50);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+can = new THREE.Mesh(geometry, material);
+can.position.set(-25, 3, 39);  // 位置を設定(x, y, z)
+scene.add(can); // シーンに追加
+
+bed.position.set(34, 3, 0);  // 位置を設定(x, y, z)
 
 // レンダリング ----------------------------------------
 function render() {
