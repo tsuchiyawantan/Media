@@ -9,6 +9,8 @@
 
 <!-- three.jsを読み込む -->
 <script type="text/javascript" src="three.min.js"></script>
+<script type="text/javascript" src="ThreeCSG.js"></script>
+
 <!-- カメラ操作用ライブラリを読み込む -->
 <script src="https://rawgithub.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
 
@@ -59,19 +61,33 @@ wall_1 = new THREE.Mesh(geometry, material);
 wall_1.position.set(-50, 50, 0);  // 位置を設定(x, y, z)
 scene.add(wall_1); // シーンに追加
 
-//wall_2
-var geometry = new THREE.CubeGeometry(100, 100, 0); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'red'});
-wall_2 = new THREE.Mesh(geometry, material);
-wall_2.position.set(0, 50, -50);  // 位置を設定(x, y, z)
-scene.add(wall_2); // シーンに追加
+var materialNormal = new THREE.MeshNormalMaterial();
 
-//wall_3
+//wall2
+var wall2_geo = new THREE.CubeGeometry(100, 100, 10); // サイズ設定（x, y, z）
+var wall2_mat = new THREE.MeshPhongMaterial({color: 'red'});
+var wall2_mesh = new THREE.Mesh(wall2_geo, wall2_mat);
+wall2_mesh.position.set(0, 50, -50);  // 位置を設定(x, y, z)
+var wall2_bsp = new ThreeBSP(wall2_mesh);
+
+var wall2win_geo = new THREE.CubeGeometry(60, 50, 15); // サイズ設定（x, y, z）
+var wall2win_mat = new THREE.MeshPhongMaterial({color: 'purple'});
+var wall2win_mesh= new THREE.Mesh(wall2win_geo, wall2win_mat);
+wall2win_mesh.position.set(0, 50, -45);  // 位置を設定(x, y, z)
+var wall2win_bsp = new ThreeBSP(wall2win_mesh);
+
+var newBSP = wall2_bsp.subtract(wall2win_bsp);
+var newMesh = newBSP.toMesh(materialNormal);
+newMesh.position.set(0, 50, -50);
+scene.add(newMesh);
+
+//wall3
 var geometry = new THREE.CubeGeometry(0, 100, 100); // サイズ設定（x, y, z）
 var material = new THREE.MeshPhongMaterial({color: 'purple'});
 wall_3 = new THREE.Mesh(geometry, material);
 wall_3.position.set(50, 50, 0);  // 位置を設定(x, y, z)
 scene.add(wall_3); // シーンに追加
+
 
 //bed
 // 物体を追加する ----------------------------------------
@@ -100,10 +116,10 @@ bed.add(pillow);
 scene.add(bed); // シーンに追加
 
 //mat
-var geometry = new THREE.CubeGeometry(15, 1, 30); // サイズ設定（x, y, z）
+var geometry = new THREE.CubeGeometry(15, .1, 30); // サイズ設定（x, y, z）
 var material = new THREE.MeshPhongMaterial({color: 'pink'});
 mat = new THREE.Mesh(geometry, material);
-mat.position.set(-25, -2, 0);  // 位置を設定(x, y, z)
+mat.position.set(-25, -2.5, 0);  // 位置を設定(x, y, z)
 bed.add(mat);
 scene.add(bed); // シーンに追加
 
