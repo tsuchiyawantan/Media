@@ -115,7 +115,6 @@ var material = new THREE.MeshPhongMaterial({color: 'black'});
 bed_p = new THREE.Mesh(geometry, material);
 bed_p.position.set(15, 0, 0);  // 位置を設定(x, y, z)
 bed.add(bed_p);
-scene.add(bed); // シーンに追加
 
 //pillow
 var geometry = new THREE.CubeGeometry(3, 2, 5); // サイズ設定（x, y, z）
@@ -123,7 +122,6 @@ var material = new THREE.MeshPhongMaterial({color: 'orange'});
 pillow = new THREE.Mesh(geometry, material);
 pillow.position.set(10, 4, 0);  // 位置を設定(x, y, z)
 bed.add(pillow);
-scene.add(bed); // シーンに追加
 
 //mat
 var geometry = new THREE.CubeGeometry(15, .1, 30); // サイズ設定（x, y, z）
@@ -131,7 +129,6 @@ var material = new THREE.MeshPhongMaterial({color: 'pink'});
 mat = new THREE.Mesh(geometry, material);
 mat.position.set(-25, -2.5, 0);  // 位置を設定(x, y, z)
 bed.add(mat);
-scene.add(bed); // シーンに追加
 
 //deskside cavin
 var geometry = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
@@ -155,20 +152,57 @@ cavin.position.set(0, 5, 54);  // 位置を設定(x, y, z)
 scene.add(cavin); // シーンに追加
 
 //bedside cylinder
-var geometry = new THREE.CylinderGeometry(3,3,6,50);
+var geometry = new THREE.CylinderGeometry(3, 3, 6, 50);
 var material = new THREE.MeshPhongMaterial({color: 'white'});
 b_cylinder = new THREE.Mesh(geometry, material);
 b_cylinder.position.set(59, 3, 20);  // 位置を設定(x, y, z)
 scene.add(b_cylinder); // シーンに追加
 
 //trash can
-var geometry = new THREE.CylinderGeometry(3,3,6,50);
+var geometry = new THREE.CylinderGeometry(3, 3, 6, 50);
 var material = new THREE.MeshPhongMaterial({color: 'white'});
 can = new THREE.Mesh(geometry, material);
 can.position.set(-25, 3, 49);  // 位置を設定(x, y, z)
 scene.add(can); // シーンに追加
 
 bed.position.set(49, 3, 0);  // 位置を設定(x, y, z)
+scene.add(bed);
+
+//pictures1
+var geometry = new THREE.CubeGeometry(0.5,10,8);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+pic_mesh = new THREE.Mesh(geometry, material);
+pic_mesh.position.set(65, 25, -10);  // 位置を設定(x, y, z)
+
+//pictures2
+var geometry = new THREE.CubeGeometry(0.5,12,8);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+var mesh = new THREE.Mesh(geometry, material);
+mesh.position.set(0, 0, 10);  // 位置を設定(x, y, z)
+pic_mesh.add(mesh); // シーンに追加
+
+//pictures3
+var geometry = new THREE.CubeGeometry(0.5,7,6);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+var mesh = new THREE.Mesh(geometry, material);
+mesh.position.set(0, 2, 20);  // 位置を設定(x, y, z)
+pic_mesh.add(mesh); // シーンに追加
+
+//pictures4
+var geometry = new THREE.CubeGeometry(0.5,6,5);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+var mesh = new THREE.Mesh(geometry, material);
+mesh.position.set(0, -5, 20);  // 位置を設定(x, y, z)
+pic_mesh.add(mesh); // シーンに追加
+
+//pictures5
+var geometry = new THREE.CubeGeometry(0.5,8,5);
+var material = new THREE.MeshPhongMaterial({color: 'white'});
+var mesh = new THREE.Mesh(geometry, material);
+mesh.position.set(0, -1, 28);  // 位置を設定(x, y, z)
+pic_mesh.add(mesh); // シーンに追加
+
+scene.add(pic_mesh);
 
 // レンダリング ----------------------------------------
 function render() {
