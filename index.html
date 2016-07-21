@@ -49,6 +49,10 @@ scene.add( light );
 
 var materialNormal = new THREE.MeshNormalMaterial();
 
+var axis = new THREE.AxisHelper(1000);             
+    scene.add(axis);                             
+    axis.position.set(0,0,1);   
+
 //plane
 var geometry = new THREE.CubeGeometry(130, 1, 130); // サイズ設定（x, y, z）
 var material = new THREE.MeshPhongMaterial({color: 'orange'});
@@ -220,11 +224,87 @@ scene.add(winshelf_newMesh);
 
 
 //desk
-var geometry = new THREE.CubeGeometry(25, 10, 10); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'yellow'});
-cavin = new THREE.Mesh(geometry, material);
-cavin.position.set(0, 5, 54);  // 位置を設定(x, y, z)
-scene.add(cavin); // シーンに追加
+var desk_geo = new THREE.CubeGeometry(10, 10, 10); // サイズ設定（x, y, z）
+var desk_mat = new THREE.MeshPhongMaterial({color: 'yellow'});
+var desk_mesh = new THREE.Mesh(desk_geo, desk_mat);
+desk_mesh.position.set(0, 5, 0);  // 位置を設定(x, y, z)
+var desk_bsp = new ThreeBSP(desk_mesh);
+
+//desk ellipse part
+var deskellipse_geo = new THREE.CylinderGeometry(5, 5, 10, 50);
+var deskellipse_mat = new THREE.MeshPhongMaterial({color: 'white'});
+var deskellipse_mesh = new THREE.Mesh(deskellipse_geo, deskellipse_mat);
+deskellipse_mesh.position.set(0, 5, 5);  // 位置を設定(x, y, z)
+var deskellipse_bsp = new ThreeBSP(deskellipse_mesh);
+
+var elpsub_geo = new THREE.CubeGeometry(10, 10, 10); // サイズ設定（x, y, z）
+var elpsub_mat = new THREE.MeshPhongMaterial({color: 'yellow'});
+var elpsub_mesh = new THREE.Mesh(elpsub_geo, elpsub_mat);
+elpsub_mesh.position.set(0, 4, 8);  // 位置を設定(x, y, z);
+var elpsub_bsp = new ThreeBSP(elpsub_mesh);
+
+var desksub_geo = new THREE.CubeGeometry(10, 10, 10); // サイズ設定（x, y, z）
+var desksub_mat = new THREE.MeshPhongMaterial({color: 'yellow'});
+var desksub_mesh = new THREE.Mesh(desksub_geo, desksub_mat);
+desksub_mesh.position.set(-2, 4, -3);  // 位置を設定(x, y, z)
+var desksub_bsp = new ThreeBSP(desksub_mesh);
+
+var deskleg_geo = new THREE.CylinderGeometry(.5, .5, 9, 50);
+var deskleg_mat = new THREE.MeshPhongMaterial({color: 'white'});
+var deskleg_mesh = new THREE.Mesh(deskleg_geo, deskleg_mat);
+deskleg_mesh.position.set(0, 4.5, 8);  // 位置を設定(x, y, z)
+var deskleg_bsp = new ThreeBSP(deskleg_mesh);
+
+var drawer_geo = new THREE.CubeGeometry(8, .5, 7); // サイズ設定（x, y, z）
+var drawer_mat = new THREE.MeshPhongMaterial({color: 'yellow'});
+var drawer_mesh = new THREE.Mesh(drawer_geo, drawer_mat);
+drawer_mesh.position.set(-1, 8.7, -1.5);  // 位置を設定(x, y, z)
+var drawer_bsp = new ThreeBSP(drawer_mesh);
+
+var drawer2_geo = new THREE.CubeGeometry(8, .5, 7); // サイズ設定（x, y, z）
+var drawer2_mat = new THREE.MeshPhongMaterial({color: 'blue'});
+var drawer2_mesh = new THREE.Mesh(drawer2_geo, drawer2_mat);
+drawer2_mesh.position.set(-1, 7, -1.5);  // 位置を設定(x, y, z)
+var drawer2_bsp = new ThreeBSP(drawer2_mesh);
+
+var drawer3_geo = new THREE.CubeGeometry(8, .5, 7); // サイズ設定（x, y, z）
+var drawer3_mat = new THREE.MeshPhongMaterial({color: 'green'});
+var drawer3_mesh = new THREE.Mesh(drawer3_geo, drawer3_mat);
+drawer3_mesh.position.set(-1, 5, -1.5);  // 位置を設定(x, y, z)
+var drawer3_bsp = new ThreeBSP(drawer3_mesh);
+
+var drawer4_geo = new THREE.CubeGeometry(8, .5, 7); // サイズ設定（x, y, z）
+var drawer4_mat = new THREE.MeshPhongMaterial({color: 'orange'});
+var drawer4_mesh = new THREE.Mesh(drawer4_geo, drawer4_mat);
+drawer4_mesh.position.set(-1, 3, -1.5);  // 位置を設定(x, y, z)
+var drawer4_bsp = new ThreeBSP(drawer4_mesh);
+
+var desk_newBSP = desk_bsp.union(deskellipse_bsp);
+desk_newBSP = desk_newBSP.subtract(elpsub_bsp);
+desk_newBSP = desk_newBSP.subtract(drawer_bsp);
+desk_newBSP = desk_newBSP.subtract(drawer2_bsp);
+desk_newBSP = desk_newBSP.subtract(drawer3_bsp);
+desk_newBSP = desk_newBSP.subtract(drawer4_bsp);
+desk_newBSP = desk_newBSP.union(deskleg_bsp);
+
+var desk_newMesh = desk_newBSP.toMesh(materialNormal);
+desk_newMesh.rotation.set(0, 3*Math.PI/2, 0);
+desk_newMesh.position.set(0, 5.5, 60);
+scene.add(desk_newMesh);
+
+
+
+//var desk_newBSP = desknew_bsp.subtract(elpsub_bsp);
+//var deskellipse_newMesh = deskellipse_newBSP.toMesh(materialNormal);
+//scene.add(deskellipse_newMesh);
+
+
+
+//scene.add(desksub_mesh); // シーンに追加
+//var desksub_bsp = new ThreeBSP(desksub_mesh);
+//var desk_newBSP = desk_bsp.subtract(desksub_bsp);
+//var desk_newMesh = desk_newBSP.toMesh(materialNormal);
+//scene.add(desk_newMesh);
 
 //bedside cylinder
 var bedcylinder_geo = new THREE.CylinderGeometry(3, 3, 6, 50);
