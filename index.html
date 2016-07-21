@@ -135,19 +135,34 @@ mat = new THREE.Mesh(geometry, material);
 mat.position.set(-50, -2.5, 0);  // 位置を設定(x, y, z)
 bed.add(mat);
 
-//deskside cavin
-var geometry = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'red'});
-b_cavin = new THREE.Mesh(geometry, material);
-b_cavin.position.set(-42, 8, 49);  // 位置を設定(x, y, z)
-scene.add(b_cavin); // シーンに追加
+//closet
+var closet_geo = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
+var closet_mat = new THREE.MeshPhongMaterial({color: 'red'});
+var closet_mesh = new THREE.Mesh(closet_geo, closet_mat);
+closet_mesh.position.set(0, 8, 0);  // 位置を設定(x, y, z)
+scene.add(closet_mesh); // シーンに追加
 
-//bedside cavin
+//closet door
+var closetd_geo = new THREE.CubeGeometry(1, 4, 18); // サイズ設定（x, y, z）
+var closetd_mat = new THREE.MeshPhongMaterial({color: 'green'});
+var closetd_mesh = new THREE.Mesh(closetd_geo, closetd_mat);
+closetd_mesh.position.set(-8, 15, 0);  // 位置を設定(x, y, z)
+scene.add(closetd_mesh); // シーンに追加
+
+//closet door
+var nob_geo = new THREE.CylinderGeometry(.5, .5, .5, 10); // サイズ設定（x, y, z）
+var nob_mat = new THREE.MeshPhongMaterial({color: 'purple'});
+var nob_mesh = new THREE.Mesh(nob_geo, nob_mat);
+nob_mesh.position.set(-8.5, 15, -6);  // 位置を設定(x, y, z)
+nob_mesh.rotation.set(0, 0, Math.PI/2);
+scene.add(nob_mesh); // シーンに追加
+
+//bedside closet
 var geometry = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
 var material = new THREE.MeshPhongMaterial({color: 'black'});
-b_cavin = new THREE.Mesh(geometry, material);
-b_cavin.position.set(60, 7, -36);  // 位置を設定(x, y, z)
-scene.add(b_cavin); // シーンに追加
+b_closet = new THREE.Mesh(geometry, material);
+b_closet.position.set(60, 7, -36);  // 位置を設定(x, y, z)
+scene.add(b_closet); // シーンに追加
 
 //mirror
 var mirror_geo = new THREE.CubeGeometry(10, 30, 1.5); // サイズ設定（x, y, z）
@@ -222,7 +237,6 @@ winshelf_newMesh.rotation.set(0, Math.PI/2, 0);
 winshelf_newMesh.scale.z = 1.5;
 scene.add(winshelf_newMesh);
 
-
 //desk
 var desk_geo = new THREE.CubeGeometry(10, 10, 10); // サイズ設定（x, y, z）
 var desk_mat = new THREE.MeshPhongMaterial({color: 'yellow'});
@@ -291,20 +305,6 @@ var desk_newMesh = desk_newBSP.toMesh(materialNormal);
 desk_newMesh.rotation.set(0, 3*Math.PI/2, 0);
 desk_newMesh.position.set(0, 5.5, 60);
 scene.add(desk_newMesh);
-
-
-
-//var desk_newBSP = desknew_bsp.subtract(elpsub_bsp);
-//var deskellipse_newMesh = deskellipse_newBSP.toMesh(materialNormal);
-//scene.add(deskellipse_newMesh);
-
-
-
-//scene.add(desksub_mesh); // シーンに追加
-//var desksub_bsp = new ThreeBSP(desksub_mesh);
-//var desk_newBSP = desk_bsp.subtract(desksub_bsp);
-//var desk_newMesh = desk_newBSP.toMesh(materialNormal);
-//scene.add(desk_newMesh);
 
 //bedside cylinder
 var bedcylinder_geo = new THREE.CylinderGeometry(3, 3, 6, 50);
