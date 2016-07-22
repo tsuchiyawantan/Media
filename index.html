@@ -140,14 +140,15 @@ var closet_geo = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, 
 var closet_mat = new THREE.MeshPhongMaterial({color: 'red'});
 var closet_mesh = new THREE.Mesh(closet_geo, closet_mat);
 closet_mesh.position.set(0, 8, 0);  // 位置を設定(x, y, z)
-scene.add(closet_mesh); // シーンに追加
+//scene.add(closet_mesh); // シーンに追加
+var closet_bsp = new ThreeBSP(closet_mesh);
 
 //closet door
 var closetd_geo = new THREE.CubeGeometry(1, 4, 18); // サイズ設定（x, y, z）
 var closetd_mat = new THREE.MeshPhongMaterial({color: 'green'});
 var closetd_mesh = new THREE.Mesh(closetd_geo, closetd_mat);
 closetd_mesh.position.set(-8, 15, 0);  // 位置を設定(x, y, z)
-scene.add(closetd_mesh); // シーンに追加
+var closetd_bsp = new ThreeBSP(closetd_mesh);
 
 //closet door
 var nob_geo = new THREE.CylinderGeometry(.5, .5, .5, 10); // サイズ設定（x, y, z）
@@ -155,7 +156,51 @@ var nob_mat = new THREE.MeshPhongMaterial({color: 'purple'});
 var nob_mesh = new THREE.Mesh(nob_geo, nob_mat);
 nob_mesh.position.set(-8.5, 15, -6);  // 位置を設定(x, y, z)
 nob_mesh.rotation.set(0, 0, Math.PI/2);
-scene.add(nob_mesh); // シーンに追加
+var nob_bsp = new ThreeBSP(nob_mesh);
+
+//closet door
+var nob2_geo = new THREE.CylinderGeometry(.5, .5, .5, 10); // サイズ設定（x, y, z）
+var nob2_mat = new THREE.MeshPhongMaterial({color: 'purple'});
+var nob2_mesh = new THREE.Mesh(nob_geo, nob_mat);
+nob2_mesh.position.set(-8.5, 15, 6);  // 位置を設定(x, y, z)
+nob2_mesh.rotation.set(0, 0, Math.PI/2);
+var nob2_bsp = new ThreeBSP(nob2_mesh);
+
+var closetd_newBSP = closetd_bsp.union(nob_bsp);
+closetd_newBSP = closetd_newBSP.union(nob2_bsp);
+var closetd_newMesh = closetd_newBSP.toMesh(materialNormal);
+closetd_newMesh.position.set(-7.5, 13, 0);
+var closetd_bsp = new ThreeBSP(closetd_newMesh);
+
+var closetd2_newMesh = closetd_newMesh.clone();
+closetd2_newMesh.position.set(-7.5, 8, 0);
+var closetd2_bsp = new ThreeBSP(closetd2_newMesh);
+
+var closetd3_newMesh = closetd_newMesh.clone();
+closetd3_newMesh.position.set(-7.5, 3, 0);
+var closetd3_bsp = new ThreeBSP(closetd3_newMesh);
+
+var closetBSP = closet_bsp.union(closetd_bsp);
+closetBSP = closetBSP.union(closetd2_bsp);
+closetBSP = closetBSP.union(closetd3_bsp);
+var closetMesh = closetBSP.toMesh(materialNormal);
+closetMesh.rotation.set(0, Math.PI, 0);
+closetMesh.position.set(-40, 8, 50);
+scene.add(closetMesh);
+
+//black closet door
+var blackdoor_geo = new THREE.CubeGeometry(1, 50, 50); // サイズ設定（x, y, z）
+var blackdoor_mat = new THREE.MeshPhongMaterial({color: 'black'});
+var blackdoor_mesh = new THREE.Mesh(blackdoor_geo, blackdoor_mat);
+blackdoor_mesh.position.set(-45, 25, -20);  // 位置を設定(x, y, z)
+scene.add(blackdoor_mesh); // シーンに追加
+
+//black closet door bar
+var bdbar_geo = new THREE.CubeGeometry(1, 2, 60); // サイズ設定（x, y, z）
+var bdbar_mat = new THREE.MeshPhongMaterial({color: 'black'});
+var bdbar_mesh = new THREE.Mesh(bdbar_geo, bdbar_mat);
+bdbar_mesh.position.set(-44, 52, -10);  // 位置を設定(x, y, z)
+scene.add(bdbar_mesh); // シーンに追加
 
 //bedside closet
 var geometry = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
