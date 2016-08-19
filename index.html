@@ -58,7 +58,7 @@ var axis = new THREE.AxisHelper(1000);
 
 //plane
 var geometry = new THREE.CubeGeometry(130, 1, 130); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'orange'});
+var material = new THREE.MeshPhongMaterial({color: '#d2b48c'});
 plane = new THREE.Mesh(geometry, material);
 plane.position.set(10, 0, 0);  // 位置を設定(x, y, z)
 scene.add(plane); // シーンに追加
@@ -91,21 +91,22 @@ var wall2_bsp = new ThreeBSP(wall2_mesh);
 
 //wall2gray
 var wall2gray_geo = new THREE.CubeGeometry(63, 22.5, 2); // サイズ設定（x, y, z）
-var wall2gray_mat = new THREE.MeshPhongMaterial({color: 'yellow'});
+var wall2gray_mat = new THREE.MeshPhongMaterial({color: '#919191'});
 var wall2gray_mesh = new THREE.Mesh(wall2gray_geo, wall2gray_mat);
 wall2gray_mesh.position.set(10, 11, -55);  // 位置を設定(x, y, z)
-//scene.add(wall2gray_mesh);
+scene.add(wall2gray_mesh);
 var wall2gray_bsp = new ThreeBSP(wall2gray_mesh);
+
 
 //wall2window
 var wall2win_geo = new THREE.CubeGeometry(63, 35, 35); // サイズ設定（x, y, z）
-var wall2win_mat = new THREE.MeshPhongMaterial({color: 'orange'});
+var wall2win_mat = new THREE.MeshPhongMaterial({color: '#919191'});
 var wall2win_mesh= new THREE.Mesh(wall2win_geo, wall2win_mat);
 wall2win_mesh.position.set(10, 40, -45);  // 位置を設定(x, y, z)
 var wall2win_bsp = new ThreeBSP(wall2win_mesh);
 
 var window2 = wall2_bsp.subtract(wall2win_bsp);
-window2 = window2.union(wall2gray_bsp);
+//window2 = window2.union(wall2gray_bsp);
 var window2mat = new THREE.MeshPhongMaterial({color: 'brown'});
 var newMesh = window2.toMesh(window2mat);
 scene.add(newMesh);
@@ -211,7 +212,7 @@ scene.add(wc_mesh);
 //bed
 
 var geometry = new THREE.CubeGeometry(30, 6, 30); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'pink'});
+var material = new THREE.MeshPhongMaterial({color: '#2f4f4f'});
 bed = new THREE.Mesh(geometry, material);
 bed.position.set(0, 0, 0);  // 位置を設定(x, y, z)
 
@@ -231,7 +232,7 @@ bed.add(pillow);
 
 //mat
 var geometry = new THREE.CubeGeometry(40, .1, 40); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'pink'});
+var material = new THREE.MeshPhongMaterial({color: '#f5deb3'});
 mat = new THREE.Mesh(geometry, material);
 mat.position.set(-50, -2.5, 0);  // 位置を設定(x, y, z)
 bed.add(mat);
@@ -284,7 +285,8 @@ var closetd3_bsp = new ThreeBSP(closetd3_newMesh);
 var closetBSP = closet_bsp.union(closetd_bsp);
 closetBSP = closetBSP.union(closetd2_bsp);
 closetBSP = closetBSP.union(closetd3_bsp);
-var closetMesh = closetBSP.toMesh(materialNormal);
+var newColor = new THREE.MeshPhongMaterial({color: '#8b0000' });
+var closetMesh = closetBSP.toMesh(newColor);
 closetMesh.rotation.set(0, Math.PI, 0);
 closetMesh.position.set(-40, 8, 50);
 scene.add(closetMesh);
@@ -325,7 +327,8 @@ var bscd_bsp = new ThreeBSP(bscd_newMesh);
 
 var bsc_BSP = bsc_bsp.union(bscd_bsp);
 bsc_BSP = bsc_BSP.subtract(boo_bsp);
-var bsc_Mesh = bsc_BSP.toMesh(materialNormal);
+var newColor = new THREE.MeshPhongMaterial({color: '#8b0000' });
+var bsc_Mesh = bsc_BSP.toMesh(newColor);
 bsc_Mesh.position.set(60, 9, -35);
 scene.add(bsc_Mesh);
 
@@ -470,7 +473,8 @@ var rec3_bsp = new ThreeBSP(rec3_mesh);
 var newBSP = bookshelf_bsp.subtract(rec1_bsp);
 newBSP = newBSP.subtract(rec2_bsp);
 newBSP = newBSP.subtract(rec3_bsp);
-var newMesh = newBSP.toMesh(materialNormal);
+var newColor = new THREE.MeshPhongMaterial({color: '#9acd32'});
+var newMesh = newBSP.toMesh(newColor);
 scene.add(newMesh);
 
 //shelf in front of the window
@@ -501,7 +505,9 @@ var rec3_bsp = new ThreeBSP(rec3_mesh);
 var winshelf_newBSP = winshelf_bsp.subtract(rec1_bsp);
 winshelf_newBSP = winshelf_newBSP.subtract(rec2_bsp);
 winshelf_newBSP = winshelf_newBSP.subtract(rec3_bsp);
-var winshelf_newMesh = winshelf_newBSP.toMesh(materialNormal);
+var rec3_mat = new THREE.MeshPhongMaterial({color: 'purple'});
+var bspColor = new THREE.MeshPhongMaterial({color: '#778899'});
+var winshelf_newMesh = winshelf_newBSP.toMesh(bspColor);
 winshelf_newMesh.position.set(10, 8, -50);
 winshelf_newMesh.rotation.set(0, Math.PI/2, 0);
 winshelf_newMesh.scale.z = 1.5;
@@ -571,7 +577,8 @@ desk_newBSP = desk_newBSP.subtract(drawer3_bsp);
 desk_newBSP = desk_newBSP.subtract(drawer4_bsp);
 desk_newBSP = desk_newBSP.union(deskleg_bsp);
 
-var desk_newMesh = desk_newBSP.toMesh(materialNormal);
+var newColor = new THREE.MeshPhongMaterial({color: '#deb887'});
+var desk_newMesh = desk_newBSP.toMesh(newColor);
 desk_newMesh.rotation.set(0, 3*Math.PI/2, 0);
 desk_newMesh.position.set(0, 5.5, 60);
 scene.add(desk_newMesh);
@@ -597,7 +604,8 @@ var rec2_bsp = new ThreeBSP(rec2_mesh);
 
 var newBSP = bedcylinder_bsp.subtract(rec_bsp);
 newBSP = newBSP.subtract(rec2_bsp);
-var newMesh = newBSP.toMesh(materialNormal);
+var newBSPcolor = new THREE.MeshPhongMaterial({color: 'white'});
+var newMesh = newBSP.toMesh(newBSPcolor);
 scene.add(newMesh);
 
 //trash can
