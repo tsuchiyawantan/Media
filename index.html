@@ -44,10 +44,14 @@ renderer.setSize(height, width); // Canvasのサイズ設定
 document.body.appendChild(renderer.domElement);
 
 var color = 'white';
-var light = new THREE.AmbientLight(color);
+var ambientLight = new THREE.AmbientLight(color);
 //var light = new THREE.DirectionalLight( 0xffffff );
-//light.position.set( -10, 1, 0 ).normalize();
-scene.add( light );
+ambientLight.position.set( 0, 40, 0 );
+scene.add( ambientLight );
+
+var directionalLight = new THREE.DirectionalLight(color, .5);
+directionalLight.position.set( 0, 10, 0);
+scene.add( directionalLight );
 
 var materialNormal = new THREE.MeshNormalMaterial();
 
@@ -58,7 +62,7 @@ var axis = new THREE.AxisHelper(1000);
 
 //plane
 var geometry = new THREE.CubeGeometry(130, 1, 130); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: '#d2b48c'});
+var material = new THREE.MeshPhongMaterial({color: '#a15f2d'});
 plane = new THREE.Mesh(geometry, material);
 plane.position.set(10, 0, 0);  // 位置を設定(x, y, z)
 scene.add(plane); // シーンに追加
@@ -73,7 +77,7 @@ var wall1_bsp = new ThreeBSP(wall1_mesh);
 var wall1clo_geo = new THREE.CubeGeometry(15, 50, 50); // サイズ設定（x, y, z）
 var wall1clo_mat = new THREE.MeshPhongMaterial({color: 'green'});
 var wall1clo_mesh= new THREE.Mesh(wall1clo_geo, wall1clo_mat);
-wall1clo_mesh.position.set(-45, 25, 0);  // 位置を設定(x, y, z)
+wall1clo_mesh.position.set(-50, 25, 0);  // 位置を設定(x, y, z)
 var wall1clo_bsp = new ThreeBSP(wall1clo_mesh);
 
 var newBSP = wall1_bsp.subtract(wall1clo_bsp);
@@ -102,12 +106,15 @@ var wall2gray_bsp = new ThreeBSP(wall2gray_mesh);
 var wall2win_geo = new THREE.CubeGeometry(63, 35, 35); // サイズ設定（x, y, z）
 var wall2win_mat = new THREE.MeshPhongMaterial({color: '#919191'});
 var wall2win_mesh= new THREE.Mesh(wall2win_geo, wall2win_mat);
-wall2win_mesh.position.set(10, 40, -45);  // 位置を設定(x, y, z)
+wall2win_mesh.position.set(10, 40, -50);  // 位置を設定(x, y, z)
 var wall2win_bsp = new ThreeBSP(wall2win_mesh);
 
 var window2 = wall2_bsp.subtract(wall2win_bsp);
-//window2 = window2.union(wall2gray_bsp);
-var window2mat = new THREE.MeshPhongMaterial({color: 'brown'});
+var loader= new THREE.TextureLoader();
+var texture= loader.load('wallBrick.jpg');
+var material = new THREE.MeshPhongMaterial({map: texture});
+//var window2mat = new THREE.MeshPhongMaterial({color: 'brown'});
+var window2mat = new THREE.MeshPhongMaterial({map: texture});
 var newMesh = window2.toMesh(window2mat);
 scene.add(newMesh);
 
@@ -120,100 +127,91 @@ scene.add(wall_3); // シーンに追加
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(2, 70, 1); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
+var wc_mat = new THREE.MeshPhongMaterial({color: '#8b4513'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(-5, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(2, 70, 1); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(25, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(-17, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(-11, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(2, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(7, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(12, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(17, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(31, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross col
 var wc_geo = new THREE.CubeGeometry(.5, 70, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(37, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross row
 var wc_geo = new THREE.CubeGeometry(70, 2, 1); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(10, 50, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross row
 var wc_geo = new THREE.CubeGeometry(70, 2, 1); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(10, 30, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //window cross row
 var wc_geo = new THREE.CubeGeometry(70, .5, .5); // サイズ設定（x, y, z）
-var wc_mat = new THREE.MeshPhongMaterial({color: 'pink'});
 var wc_mesh = new THREE.Mesh(wc_geo, wc_mat);
 wc_mesh.position.set(10, 40, -62);  // 位置を設定(x, y, z)
 scene.add(wc_mesh);
 
 //bed
-
 var geometry = new THREE.CubeGeometry(30, 6, 30); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: '#2f4f4f'});
-bed = new THREE.Mesh(geometry, material);
+//テクスチャ読み込み
+var loader= new THREE.TextureLoader();
+var texture= loader.load('bed.gif');
+//var material = new THREE.MeshPhongMaterial({color: '#2f4f4f'});
+var material = new THREE.MeshPhongMaterial({map: texture});
+var bed = new THREE.Mesh(geometry, material);
 bed.position.set(0, 0, 0);  // 位置を設定(x, y, z)
 
 //bed_parts
@@ -232,12 +230,12 @@ bed.add(pillow);
 
 //mat
 var geometry = new THREE.CubeGeometry(40, .1, 40); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: '#f5deb3'});
+var material = new THREE.MeshPhongMaterial({color: '#a0522d'});
 mat = new THREE.Mesh(geometry, material);
 mat.position.set(-50, -2.5, 0);  // 位置を設定(x, y, z)
 bed.add(mat);
 
-//closet
+//closet beside trash can
 var closet_geo = new THREE.CubeGeometry(14, 15, 20); // サイズ設定（x, y, z）
 var closet_mat = new THREE.MeshPhongMaterial({color: 'red'});
 var closet_mesh = new THREE.Mesh(closet_geo, closet_mat);
@@ -285,7 +283,7 @@ var closetd3_bsp = new ThreeBSP(closetd3_newMesh);
 var closetBSP = closet_bsp.union(closetd_bsp);
 closetBSP = closetBSP.union(closetd2_bsp);
 closetBSP = closetBSP.union(closetd3_bsp);
-var newColor = new THREE.MeshPhongMaterial({color: '#8b0000' });
+var newColor = new THREE.MeshPhongMaterial({color: '#8b4513' });
 var closetMesh = closetBSP.toMesh(newColor);
 closetMesh.rotation.set(0, Math.PI, 0);
 closetMesh.position.set(-40, 8, 50);
@@ -293,14 +291,14 @@ scene.add(closetMesh);
 
 //black closet door
 var blackdoor_geo = new THREE.CubeGeometry(1, 50, 50); // サイズ設定（x, y, z）
-var blackdoor_mat = new THREE.MeshPhongMaterial({color: 'black'});
+var blackdoor_mat = new THREE.MeshPhongMaterial({color: '#3f3f3f'});
 var blackdoor_mesh = new THREE.Mesh(blackdoor_geo, blackdoor_mat);
 blackdoor_mesh.position.set(-45, 25, -20);  // 位置を設定(x, y, z)
 scene.add(blackdoor_mesh); // シーンに追加
 
 //black closet door bar
 var bdbar_geo = new THREE.CubeGeometry(1, 2, 60); // サイズ設定（x, y, z）
-var bdbar_mat = new THREE.MeshPhongMaterial({color: 'black'});
+var bdbar_mat = new THREE.MeshPhongMaterial({color: '#3f3f3f'});
 var bdbar_mesh = new THREE.Mesh(bdbar_geo, bdbar_mat);
 bdbar_mesh.position.set(-44, 52, -10);  // 位置を設定(x, y, z)
 scene.add(bdbar_mesh); // シーンに追加
@@ -327,7 +325,7 @@ var bscd_bsp = new ThreeBSP(bscd_newMesh);
 
 var bsc_BSP = bsc_bsp.union(bscd_bsp);
 bsc_BSP = bsc_BSP.subtract(boo_bsp);
-var newColor = new THREE.MeshPhongMaterial({color: '#8b0000' });
+var newColor = new THREE.MeshPhongMaterial({color: '#8b4513' });
 var bsc_Mesh = bsc_BSP.toMesh(newColor);
 bsc_Mesh.position.set(60, 9, -35);
 scene.add(bsc_Mesh);
@@ -577,7 +575,7 @@ desk_newBSP = desk_newBSP.subtract(drawer3_bsp);
 desk_newBSP = desk_newBSP.subtract(drawer4_bsp);
 desk_newBSP = desk_newBSP.union(deskleg_bsp);
 
-var newColor = new THREE.MeshPhongMaterial({color: '#deb887'});
+var newColor = new THREE.MeshPhongMaterial({color: '#b8860b'});
 var desk_newMesh = desk_newBSP.toMesh(newColor);
 desk_newMesh.rotation.set(0, 3*Math.PI/2, 0);
 desk_newMesh.position.set(0, 5.5, 60);
@@ -619,39 +617,51 @@ bed.position.set(49, 3, 0);  // 位置を設定(x, y, z)
 scene.add(bed);
 
 //pictures1
-//var loader= new THREE.TextureLoader();
-//var texture = loader.load('bed.png');
+var loader= new THREE.TextureLoader();
+var texture = loader.load('pic1.jpg');
 var geometry = new THREE.CubeGeometry(0.5,10,8);
-//var material = new THREE.MeshPhongMaterial({map: texture});
-var material = new THREE.MeshPhongMaterial({color: 'pink'});
+var material = new THREE.MeshPhongMaterial({map: texture});
+//var material = new THREE.MeshPhongMaterial({color: 'pink'});
 var pic_mesh = new THREE.Mesh(geometry, material);
 pic_mesh.position.set(65, 25, -10);  // 位置を設定(x, y, z)
 scene.add(pic_mesh);
 
 //pictures2
 var geometry = new THREE.CubeGeometry(0.5,12,8);
-var material = new THREE.MeshPhongMaterial({color: 'white'});
+var loader= new THREE.TextureLoader();
+var texture = loader.load('pic2.jpg');
+var material = new THREE.MeshPhongMaterial({map: texture});
+//var material = new THREE.MeshPhongMaterial({color: 'white'});
 var pic_mesh2 = new THREE.Mesh(geometry, material);
 pic_mesh2.position.set(65, 25, 0);  // 位置を設定(x, y, z)
 scene.add(pic_mesh2); // シーンに追加
 
 //pictures3
 var geometry = new THREE.CubeGeometry(0.5,7,6);
-var material = new THREE.MeshPhongMaterial({color: 'white'});
+var loader= new THREE.TextureLoader();
+var texture = loader.load('pic3.jpg');
+var material = new THREE.MeshPhongMaterial({map: texture});
+//var material = new THREE.MeshPhongMaterial({color: 'white'});
 var pic_mesh3 = new THREE.Mesh(geometry, material);
 pic_mesh3.position.set(65, 27, 10);  // 位置を設定(x, y, z)
 scene.add(pic_mesh3); // シーンに追加
 
 //pictures4
 var geometry = new THREE.CubeGeometry(0.5,6,5);
-var material = new THREE.MeshPhongMaterial({color: 'white'});
+var loader= new THREE.TextureLoader();
+var texture = loader.load('pic4.jpg');
+var material = new THREE.MeshPhongMaterial({map: texture});
+//var material = new THREE.MeshPhongMaterial({color: 'white'});
 var pic_mesh4 = new THREE.Mesh(geometry, material);
 pic_mesh4.position.set(65, 20, 10);  // 位置を設定(x, y, z)
 scene.add(pic_mesh4); // シーンに追加
 
 //pictures5
 var geometry = new THREE.CubeGeometry(0.5,8,5);
-var material = new THREE.MeshPhongMaterial({color: 'white'});
+var loader= new THREE.TextureLoader();
+var texture = loader.load('pic5.jpg');
+var material = new THREE.MeshPhongMaterial({map: texture});
+//var material = new THREE.MeshPhongMaterial({color: 'white'});
 var pic_mesh5 = new THREE.Mesh(geometry, material);
 pic_mesh5.position.set(65, 24, 18);  // 位置を設定(x, y, z)
 scene.add(pic_mesh5);
