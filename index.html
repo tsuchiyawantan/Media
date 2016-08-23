@@ -94,12 +94,14 @@ wall2_mesh.position.set(10, 50, -60);  // 位置を設定(x, y, z)
 var wall2_bsp = new ThreeBSP(wall2_mesh);
 
 //wall2gray
-var wall2gray_geo = new THREE.CubeGeometry(63, 22.5, 2); // サイズ設定（x, y, z）
-var wall2gray_mat = new THREE.MeshPhongMaterial({color: '#919191'});
-var wall2gray_mesh = new THREE.Mesh(wall2gray_geo, wall2gray_mat);
-wall2gray_mesh.position.set(10, 11, -55);  // 位置を設定(x, y, z)
-scene.add(wall2gray_mesh);
-var wall2gray_bsp = new ThreeBSP(wall2gray_mesh);
+var grayG = new THREE.CubeGeometry(63, 22.5, 2); // サイズ設定（x, y, z）
+var loader= new THREE.TextureLoader();
+var grayTexture = loader.load('grayBack.jpg');
+var grayMat = new THREE.MeshPhongMaterial({map: grayTexture});
+var grayMesh = new THREE.Mesh(grayG, grayMat);
+grayMesh.position.set(10, 11, -55);  // 位置を設定(x, y, z)
+scene.add(grayMesh);
+var grayBsp = new ThreeBSP(grayMesh);
 
 
 //wall2window
@@ -221,12 +223,26 @@ bed_p = new THREE.Mesh(geometry, material);
 bed_p.position.set(15, 5, 0);  // 位置を設定(x, y, z)
 bed.add(bed_p);
 
-//pillow
-var geometry = new THREE.CubeGeometry(3, 2, 5); // サイズ設定（x, y, z）
-var material = new THREE.MeshPhongMaterial({color: 'orange'});
-pillow = new THREE.Mesh(geometry, material);
-pillow.position.set(10, 4, 0);  // 位置を設定(x, y, z)
-bed.add(pillow);
+//pillow1
+var pillowG = new THREE.CubeGeometry(5, 1.5, 8); // サイズ設定（x, y, z）
+var pillowMat = new THREE.MeshPhongMaterial({color: 'white'});
+var pillowMesh = new THREE.Mesh(pillowG, pillowMat);
+pillowMesh.position.set(60, 8, -8);  // 位置を設定(x, y, z)
+pillowMesh.rotation.set(Math.PI/6, 0, Math.PI/4);
+scene.add(pillowMesh);
+
+//pillow2
+var pillowMesh2 = pillowMesh.clone();
+pillowMesh2.position.set(60, 8, 0);  // 位置を設定(x, y, z)
+pillowMesh2.rotation.set(0, 0, Math.PI/3);
+scene.add(pillowMesh2);
+
+//pillow3
+var pillowMesh3 = pillowMesh.clone();
+pillowMesh3.position.set(60, 8, 8);  // 位置を設定(x, y, z)
+pillowMesh3.rotation.set(-Math.PI/6, 0, Math.PI/4);
+scene.add(pillowMesh3);
+
 
 //mat
 var geometry = new THREE.CubeGeometry(40, .1, 40); // サイズ設定（x, y, z）
@@ -430,18 +446,29 @@ chairBaseBSP = chairBaseBSP.union(chairLegBSP);
 chairBaseBSP = chairBaseBSP.union(backrestPoleBSP1);
 chairBaseBSP = chairBaseBSP.union(backrestPoleBSP2);
 chairBaseBSP = chairBaseBSP.union(backrest_bsp);
-var chairBaseMesh = chairBaseBSP.toMesh(materialNormal);
+var newColor = new THREE.MeshPhongMaterial({color: '#740A00' });
+var chairBaseMesh = chairBaseBSP.toMesh(newColor);
 chairBaseMesh.position.set(-3, 5, 48);  // 位置を設定(x, y, z)
 scene.add(chairBaseMesh);
 
 
 //mirror
-var mirror_geo = new THREE.CubeGeometry(10, 30, 1.5); // サイズ設定（x, y, z）
-var mirror_mat = new THREE.MeshPhongMaterial({color: 'black'});
-var mirror_mesh = new THREE.Mesh(mirror_geo, mirror_mat);
-mirror_mesh.rotation.set(0, Math.PI/4, 0);
-mirror_mesh.position.set(-40, 15, -50);  // 位置を設定(x, y, z)
-scene.add(mirror_mesh); // シーンに追加
+var mirrorG = new THREE.CubeGeometry(10, 30, 1.5); // サイズ設定（x, y, z）
+var loader = new THREE.TextureLoader();
+var mirrorTexture = loader.load('mirror.jpg');
+var mirrorMat = new THREE.MeshPhongMaterial({map: mirrorTexture});
+var mirrorMesh = new THREE.Mesh(mirrorG, mirrorMat);
+mirrorMesh.rotation.set(0, Math.PI/4, 0);
+mirrorMesh.position.set(-38, 15, -48); 
+scene.add(mirrorMesh);
+var mirrorBsp = new ThreeBSP(mirrorMesh);
+
+var mirrorFrameG = new THREE.CubeGeometry(15, 35, 1.5); // サイズ設定（x, y, z）
+var mirrorFrameMat = new THREE.MeshPhongMaterial({color: 'black'});
+var mirrorFrameMesh = new THREE.Mesh(mirrorFrameG, mirrorFrameMat);
+mirrorFrameMesh.rotation.set(0, Math.PI/4, 0);
+mirrorFrameMesh.position.set(-39, 15, -49); 
+scene.add(mirrorFrameMesh);
 
 //book shelf
 var bookshelf_geo = new THREE.CubeGeometry(8, 15, 15); // サイズ設定（x, y, z）
